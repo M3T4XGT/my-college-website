@@ -1,10 +1,60 @@
+"use client";
+import { useEffect } from "react";
+import { event } from "../lib/gtag";
+
 export default function TestimonialSection() {
+  // 🔹 Track when the section becomes visible in viewport
+  useEffect(() => {
+    const section = document.getElementById("testimonial-section");
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            event({
+              action: "testimonial_section_view",
+              params: {
+                category: "TestimonialSection",
+                label: "User viewed testimonial section",
+                timestamp: new Date().toISOString(),
+              },
+            });
+            obs.unobserve(entry.target); // Fire once
+          }
+        });
+      },
+      { threshold: 0.4, rootMargin: "0px", once: true }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  // 🔹 Track clicks (image or author)
+  const handleClick = (label) => {
+    event({
+      action: "testimonial_click",
+      params: {
+        category: "TestimonialSection",
+        label,
+        timestamp: new Date().toISOString(),
+      },
+    });
+  };
+
   return (
-    <section className="bg-[#041E42] text-white py-12 sm:py-16 px-4 sm:px-6 md:px-12 overflow-hidden">
+    <section
+      id="testimonial-section"
+      className="bg-[#041E42] text-white py-12 sm:py-16 px-4 sm:px-6 md:px-12 overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 sm:gap-10 md:gap-14">
         
         {/* === Left: Image === */}
-        <div className="w-full md:w-1/2 flex justify-center items-center py-4 sm:py-8">
+        <div
+          className="w-full md:w-1/2 flex justify-center items-center py-4 sm:py-8 cursor-pointer"
+          onClick={() => handleClick("Adam Serfoss Image")}
+        >
           <img
             src="/adam-serfoss.jpg"
             alt="Adam Serfoss"
@@ -22,7 +72,6 @@ export default function TestimonialSection() {
             className="absolute -top-6 sm:-top-8 md:-top-10 left-4 sm:left-0 w-8 sm:w-10 md:w-14 opacity-90"
           />
 
-          {/* Quote Text */}
           <blockquote className="relative z-10 text-base sm:text-lg md:text-xl font-[myriad-pro-condensed,sans-serif] font-semibold leading-relaxed px-2 sm:px-0">
             <p>
               Nevada is not only my home but also the home of my family, friends
@@ -33,7 +82,7 @@ export default function TestimonialSection() {
             </p>
           </blockquote>
 
-          {/* Closing Quote (rotated same image) */}
+          {/* Closing Quote (rotated) */}
           <img
             src="/quote-lightblue-open.svg"
             alt="Closing quote"
@@ -41,7 +90,12 @@ export default function TestimonialSection() {
           />
 
           {/* Author */}
-          <p className="mt-6 sm:mt-8 text-xs sm:text-sm md:text-base font-bold">
+          <p
+            className="mt-6 sm:mt-8 text-xs sm:text-sm md:text-base font-bold cursor-pointer hover:text-accent transition-colors duration-200"
+            onClick={() =>
+              handleClick("Adam Serfoss – Physician Assistant Program, Class of 2025")
+            }
+          >
             – Adam Serfoss –{" "}
             <span className="font-normal italic block sm:inline">
               Physician Assistant Studies Program, Class of 2025

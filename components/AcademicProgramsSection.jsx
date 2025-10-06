@@ -1,4 +1,15 @@
+"use client";
+import useTrackSectionView from "../hooks/useTrackSectionView";
+import useTrackClick from "../hooks/useTrackClick";
+
 export default function AcademicProgramsSection() {
+  // 🔹 Track when this section comes into view
+  useTrackSectionView("academic-programs", "Academic Programs Section Viewed");
+
+  // 🔹 Reusable click tracker for this section
+  const trackClick = useTrackClick("AcademicProgramsSection");
+
+  // 📘 Top Programs
   const topPrograms = [
     {
       title: "Medical Doctor (M.D.) Program",
@@ -20,6 +31,7 @@ export default function AcademicProgramsSection() {
     },
   ];
 
+  // 🎓 Bottom Programs
   const bottomPrograms = [
     {
       title: "Residency and Fellowship Programs",
@@ -36,13 +48,16 @@ export default function AcademicProgramsSection() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 px-4 sm:px-6 md:px-12 bg-white text-[#041E42]">
+    <section
+      id="academic-programs"
+      className="py-12 sm:py-16 px-4 sm:px-6 md:px-12 bg-white text-[#041E42]"
+    >
       {/* Header */}
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-[myriad-pro-condensed,sans-serif] text-center mb-8 sm:mb-12">
         Find your academic program:
       </h2>
 
-      {/* === Top Row: 3 Columns (responsive) === */}
+      {/* === Top Row === */}
       <div className="max-w-7xl mx-auto grid gap-6 sm:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {topPrograms.map((program, index) => (
           <div
@@ -57,6 +72,9 @@ export default function AcademicProgramsSection() {
             </p>
             <a
               href={program.link}
+              onClick={() => trackClick(program.title)}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block border border-[#66A8E0] bg-[#002855] text-white text-xs sm:text-sm font-[myriad-pro-condensed,sans-serif] font-extrabold uppercase px-5 sm:px-6 py-2.5 sm:py-3 hover:bg-[#00C278] hover:text-[#041E42] transition-all duration-300 text-center w-full sm:w-auto"
             >
               {program.button}
@@ -65,7 +83,7 @@ export default function AcademicProgramsSection() {
         ))}
       </div>
 
-      {/* === Bottom Row: 2 Wide Columns === */}
+      {/* === Bottom Row === */}
       <div className="max-w-7xl mx-auto grid gap-6 sm:gap-8 sm:grid-cols-1 lg:grid-cols-2 mt-8 sm:mt-10">
         {bottomPrograms.map((program, index) => (
           <div
@@ -80,6 +98,9 @@ export default function AcademicProgramsSection() {
             </p>
             <a
               href={program.link}
+              onClick={() => trackClick(program.title)}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block border border-[#66A8E0] bg-[#002855] text-white text-xs sm:text-sm font-[myriad-pro-condensed,sans-serif] font-extrabold uppercase px-5 sm:px-6 py-2.5 sm:py-3 hover:bg-[#00C278] hover:text-[#041E42] transition-all duration-300 text-center w-full sm:w-auto"
             >
               {program.button}

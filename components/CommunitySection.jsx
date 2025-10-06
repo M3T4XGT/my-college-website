@@ -1,8 +1,19 @@
+"use client";
+import useTrackSectionView from "../hooks/useTrackSectionView";
+import useTrackClick from "../hooks/useTrackClick";
+
 export default function CommunitySection() {
+  // 🔹 Track when the section becomes visible in the viewport
+  useTrackSectionView("community-section", "Community Section Viewed");
+
+  // 🔹 Setup click tracker
+  const trackClick = useTrackClick("CommunitySection");
+
   return (
     <section
+      id="community-section"
       className="relative bg-cover bg-center bg-no-repeat text-center text-white flex items-center justify-center min-h-[60vh] sm:min-h-[70vh] md:min-h-[80vh]"
-      style={{ backgroundImage: "url('/about-hero-reno-downtown.jpg')" }} // ✅ your image
+      style={{ backgroundImage: "url('/about-hero-reno-downtown.jpg')" }}
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-[#3A3B3E]/60 md:bg-[#3A3B3E]/50"></div>
@@ -21,9 +32,12 @@ export default function CommunitySection() {
           year-round outdoor experiences.
         </p>
 
-        {/* CTA Button */}
+        {/* CTA Button (Tracked) */}
         <a
           href="https://med.unr.edu/about/our-campus/living-reno"
+          onClick={() => trackClick("Learn More About Reno-Tahoe Area")}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-block text-white font-bold border-2 border-white text-xs sm:text-sm md:text-base px-4 sm:px-6 py-2.5 sm:py-3 uppercase tracking-wide rounded-sm hover:bg-white hover:text-primary transition-all duration-300"
         >
           Learn More About Reno-Tahoe Area

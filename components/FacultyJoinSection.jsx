@@ -1,9 +1,22 @@
+"use client";
+import useTrackSectionView from "../hooks/useTrackSectionView";
+import useTrackClick from "../hooks/useTrackClick";
+
 export default function FacultyJoinSection() {
+  // 🔹 Automatically fire a view event when this section scrolls into view
+  useTrackSectionView("faculty-join-section", "Faculty Join Section Viewed");
+
+  // 🔹 Reusable click tracker
+  const trackClick = useTrackClick("FacultyJoinSection");
+
   return (
-    <section className="bg-white text-[#041E42] py-12 sm:py-16 px-4 sm:px-6 md:px-12">
+    <section
+      id="faculty-join-section"
+      className="bg-white text-[#041E42] py-12 sm:py-16 px-4 sm:px-6 md:px-12"
+    >
       <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-8 sm:gap-10 md:gap-14">
         
-        {/* Left: Text Content */}
+        {/* === Left: Text Content === */}
         <div className="w-full md:w-1/2 text-center md:text-left mt-8 md:mt-0">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-[myriad-pro-condensed,sans-serif] mb-4 leading-snug md:leading-tight">
             Why teach at UNR Med?
@@ -17,21 +30,25 @@ export default function FacultyJoinSection() {
             health care professionals.
           </p>
 
-          {/* CTA Button */}
+          {/* === CTA Button (Tracked) === */}
           <a
             href="https://med.unr.edu/get-involved/why-teach"
+            onClick={() => trackClick("Join Our Faculty CTA")}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-[#041E42] text-white font-bold text-xs sm:text-sm md:text-base uppercase tracking-wide px-5 sm:px-6 py-2.5 sm:py-3 rounded-sm hover:bg-accent transition-all duration-300"
           >
             Join Our Faculty
           </a>
         </div>
 
-        {/* Right: Image */}
+        {/* === Right: Image === */}
         <div className="w-full md:w-1/2 flex justify-center">
           <img
-            src="/Home-teaching-med-students-cb.jpg" // ✅ your actual image
+            src="/Home-teaching-med-students-cb.jpg"
             alt="UNR Faculty Teaching"
             className="rounded-sm shadow-lg w-full max-w-sm sm:max-w-md md:max-w-xl object-cover h-auto md:h-[420px]"
+            loading="lazy"
           />
         </div>
       </div>
