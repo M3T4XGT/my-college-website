@@ -3,6 +3,7 @@ import Script from "next/script";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import * as gtag from "../lib/gtag";
+import Clarity from "@microsoft/clarity"; // ✅ Add this import
 
 import Header from "../components/Header";
 import MainNav from "../components/MainNav";
@@ -21,10 +22,17 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
+    // ✅ Track GA4 route changes
     const handleRouteChange = (url) => {
       gtag.pageview(url);
     };
     router.events.on("routeChangeComplete", handleRouteChange);
+
+    // ✅ Initialize Microsoft Clarity once (replace YOUR_PROJECT_ID)
+    if (typeof window !== "undefined") {
+      Clarity.init("tm1yb67p3b");
+    }
+
     return () => {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
@@ -52,7 +60,7 @@ export default function App({ Component, pageProps }) {
         }}
       />
 
-      {/* ✅ Your Site Components */}
+      {/* ✅ Page Layout */}
       <Header />
       <MainNav />
       <HeroSection />
@@ -65,6 +73,8 @@ export default function App({ Component, pageProps }) {
       <TestimonialSection />
       <CommunitySection />
       <Footer />
+
+      {/* ✅ Render Page Content */}
       <Component {...pageProps} />
     </>
   );
