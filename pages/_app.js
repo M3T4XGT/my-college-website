@@ -3,7 +3,6 @@ import Script from "next/script";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import * as gtag from "../lib/gtag";
-import Clarity from "@microsoft/clarity"; // ✅ Add this import
 
 import Header from "../components/Header";
 import MainNav from "../components/MainNav";
@@ -22,15 +21,27 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
-    // ✅ Track GA4 route changes
+    // ✅ Track GA4 page views
     const handleRouteChange = (url) => {
       gtag.pageview(url);
     };
     router.events.on("routeChangeComplete", handleRouteChange);
 
-    // ✅ Initialize Microsoft Clarity once (replace YOUR_PROJECT_ID)
-    if (typeof window !== "undefined") {
-      Clarity.init("tm1yb67p3b");
+    // ✅ Dynamically load Microsoft Clarity (client-side only)
+    const clarityId = "tm1yb67p3b"; // your actual Clarity project ID
+    if (typeof window !== "undefined" && clarityId) {
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", clarityId);
     }
 
     return () => {
@@ -74,7 +85,7 @@ export default function App({ Component, pageProps }) {
       <CommunitySection />
       <Footer />
 
-      {/* ✅ Render Page Content */}
+      {/* ✅ Render page content */}
       <Component {...pageProps} />
     </>
   );
