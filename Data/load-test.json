@@ -1,0 +1,44 @@
+{
+  "config": {
+    "target": "https://funny-figolla-c9e353.netlify.app",
+    "phases": [
+      {
+        "duration": 60,
+        "arrivalRate": 8
+      }
+    ],
+    "defaults": {
+      "headers": {
+        "User-Agent": "Artillery Load Test"
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "name": "Typical user journey",
+      "flow": [
+        {
+          "get": { "url": "/" }
+        },
+        {
+          "think": 2
+        },
+        {
+          "get": { "url": "/about" }
+        },
+        {
+          "think": 1
+        },
+        {
+          "get": { "url": "/contact" }
+        },
+        {
+          "think": 2
+        },
+        {
+          "get": { "url": "/get-involved/give-unr-med" }
+        }
+      ]
+    }
+  ]
+}
