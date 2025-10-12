@@ -20,7 +20,7 @@ export default function Footer() {
   ];
 
   const socialIcons = [
-    { name: "Flickr", link: "https://www.flickr.com/photos/nevadamedicine", svg: /* same SVG */ null },
+    { name: "Flickr", link: "https://www.flickr.com/photos/nevadamedicine", svg: null },
     { name: "Facebook", link: "https://www.facebook.com/unrmed", svg: null },
     { name: "Instagram", link: "https://www.instagram.com/unrmed/", svg: null },
     { name: "YouTube", link: "https://www.youtube.com/@UNRMed", svg: null },
@@ -63,9 +63,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label={`UNR Med ${icon.name}`}
                 className="bg-white rounded-full p-2.5 sm:p-3 hover:bg-accent hover:scale-105 transition-all duration-300 ease-in-out shadow-sm"
-                onClick={() =>
-                  trackClick(`Social Icon: ${icon.name}`)
-                }
+                onClick={() => trackClick(`Social Icon: ${icon.name}`)}
               >
                 {icon.svg || (
                   <span className="text-[#2E6CA2] font-semibold text-sm">
@@ -98,6 +96,11 @@ export default function Footer() {
             </li>
           ))}
         </ul>
+
+        {/* ===== COPYRIGHT LINE ===== */}
+        <p className="text-[#041E42] text-xs sm:text-sm mt-3 font-semibold tracking-wide">
+          © 2025 All Rights Reserved | University of Nevada, Reno School of Medicine
+        </p>
       </div>
     </footer>
   );
